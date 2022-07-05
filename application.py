@@ -87,7 +87,8 @@ def upload_event():
 @app.route("/datastream/upload", methods=['POST'])
 def upload_datastream():
     # authenticate the access token with okta api call
-    auth_headers = {}
+    auth_token = request.headers['Authorization']
+    auth_headers = {"Authorization": "{}".format(auth_token)}
 
     print("sending request to: {}".format(IDENTITY_SERVER_SETTINGS['HOST_URL']+'/authenticate'))
     auth_response = requests.get(IDENTITY_SERVER_SETTINGS['HOST_URL']+'/authenticate', headers=auth_headers)
