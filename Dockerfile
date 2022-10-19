@@ -5,6 +5,7 @@ WORKDIR /app
 RUN yes | apt-get update -y
 RUN yes | apt-get install python3-pip -y
 RUN pip install --no-cache-dir --upgrade pip
+RUN pip install python-dateutil
 RUN pip install -r requirements.txt
 
 COPY . /app
