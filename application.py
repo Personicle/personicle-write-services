@@ -242,12 +242,15 @@ def delete_events_func(request,auth_response, event_type,event_id,delete_header)
             delete_all_user_info_query =  model_class.__table__.delete().where( (model_class.user_id == u_id))
             result = session.execute(delete_all_user_info_query)
             total_deleted_events = result.rowcount
-            if total_deleted_events != 0:
-                session.commit()
-                return jsonify({"message": f"Deleted {total_deleted_events}  {p.plural('event'),total_deleted_events}" }),200
-            else:
+            try:
+                if total_deleted_events != 0:
+                    session.commit()
+                    return jsonify({"message": f"Deleted {total_deleted_events}  {p.plural('event'),total_deleted_events}" }),200
+                else:
+                    session.rollback()
+                    return jsonify({"message": f"No events found/deleted"}), 400
+            except:
                 session.rollback()
-                return jsonify({"message": f"No events found/deleted"}), 400
 
         if event_ids:
             query = model_class.__table__.delete().where( (model_class.user_id == u_id) & (model_class.unique_event_id.in_(event_ids)))
