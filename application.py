@@ -301,8 +301,8 @@ def delete_event(user_id: str=Query(), event_type: Optional[str]=Query(), event_
     auth_response = authenticate(request)
     if auth_response.status_code == 401:
         return Response("Unauthorized", 401)
-    session.execute("ROLLBACK")
-    session.commit()
+#     session.execute("ROLLBACK")
+#     session.commit()
     delete_header = request.headers.get('DELETE_DATA', None)
     return delete_events_func(request,auth_response,event_type,event_id,delete_header)
    
