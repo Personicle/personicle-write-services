@@ -285,14 +285,20 @@ def delete_events_func(request,auth_response, event_type,event_id,delete_header)
 
         result = session.execute(query)
         total_events = result.rowcount
-        if total_events != 0:
-            session.commit()
-            return jsonify({"message": f"Deleted {total_events} {event_name} {p.plural('event'),total_events}"}),200
-        else:
+     
+        try:   
+            if total_events != 0:
+                session.commit()
+                return jsonify({"message": f"Deleted {total_events} {event_name} {p.plural('event'),total_events}"}),200
+            else:
+                session.rollback()
+                return jsonify({"message": f"No such {event_name} found"}), 400
+        except:
             session.rollback()
-            return jsonify({"message": f"No such {event_name} found"}), 400
+            
     except requests.exceptions.RequestException as e:
         print(e) 
+        session.rollback()
 
 
 @app.route("/event/delete", methods=["DELETE"])
