@@ -34,6 +34,6 @@ typing_extensions==4.1.1
 uamqp==1.5.2
 urllib3==1.26.9
 Werkzeug==2.0.3
-flask_parameter_validation
+flask_parameter_validation==2.1.0
 inflect
 python-dateutil
