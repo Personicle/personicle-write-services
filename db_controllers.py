@@ -10,7 +10,6 @@ from sqlalchemy import delete
 
 EVENTS_TABLE = "personal_events"
 EVENTS_SCHEMA = "event_schema.avsc"
-
 session = loadSession()
 
 def delete_events(event_ids : List):
