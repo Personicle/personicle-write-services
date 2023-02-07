@@ -2,7 +2,6 @@ import os
 import json
 import pathlib
 import configparser
-
 __file_path = os.path.abspath(__file__)
 __dir_path = os.path.dirname(__file_path)
 
